@@ -1,6 +1,8 @@
 #include <stdio.h> 
 #include <stdlib.h> 
 #include <string.h>
+#include "cp.h"
+
 void cp(char **args) {
     if (args[1] == NULL || args[2] == NULL) {
         printf("Error: Two paths required (source and destination)\n");
