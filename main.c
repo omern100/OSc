@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h> // עבור chdir ו-pipe
+#include <unistd.h>
+#include <sys/wait.h> // הוספנו עבור wait
 #include "Welcome.h"
 #include "getLocation.h"
 #include "splitArgument.h"
@@ -107,7 +108,16 @@ int main() {
             free(args);
             break;
         } else {
-            printf("Unknown command! Try: welcome, location, split, logout, cd, cp, delete, move, echoappend, echowrite, myread, wc, help, exit\n");
+            pid_t pid = fork();
+            if (pid == -1) {
+                perror("Error in fork");
+            } else if (pid == 0) { // תהליך הילד
+                execvp(args[0], args);
+                perror("Error executing command");
+                exit(1);
+            } else { // תהליך האב
+                wait(NULL);
+            }
         }
         free(args);
     }

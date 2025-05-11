@@ -6,7 +6,7 @@
 
 void cd(char **args) {
     if (args[1] == NULL) { // אם אין נתיב אחרי "cd"
-        printf("Error: No path provided\n"); // שגיאה אם אין תיקייה
+        printf("Error\n"); // שגיאה אם אין תיקייה
         return;
     }
 
@@ -20,7 +20,7 @@ void cd(char **args) {
         }
         path = (char *)malloc(len * sizeof(char)); // מקצה זיכרון לנתיב
         if (path == NULL) {
-            perror("Error in malloc");
+            perror("Error");
             return;
         }
         path[0] = '\0'; // מתחיל עם מחרוזת ריקה
